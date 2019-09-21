@@ -1,20 +1,21 @@
-A = [-18.2 -5.1;0.3 0];
-B = [435.5 -36.7]';
-C = [-0.2 0];
+V = 12;
+qo = 0.15;
+qi = 0.15;
+ko = 9.4;
+E = 2500;
+R = 8.31;
+T = 293;
+
+A = [((-qo/V)+(-ko*exp(-E/(R*T)))) 0;(ko*exp(-E/(R*T))) (-qo/V)];
+B = [qi/V 0]';
+C = [1 1];
 D = 0;
+% State spcae model
+sys= ss(A,B,C,D);
+step(sys);
 
-% Transfer  function model
-sys = ss(A,B,C,D)
-
-[b,a]= ss2tf(A,B,C,D)
-
-H= tf(b,a)
-
-%bode(H)
-
-% To check the output in time domain
-%u=1;
-%model= @(t,x) A*x+ B*u;
+%u= 1;
+%model= @(t,x) A*x + B*u;
 %output= @(x) C*x + D*u;
 %options = odeset('RelTol',1e-4,'AbsTol',1e-6)
 %timespan=[0 20];
