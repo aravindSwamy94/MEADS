@@ -12,9 +12,13 @@ C = [1 0];
 D = 0;
 
 sys = ss(A,B,C,D);
-
 [b,a] = ss2tf(A,B,C,D);
-
 H = tf(b,a);
-H
+%pzmap(H);
+stability=isstable(sys);
+if stability == 0
+    disp('unstable')
+else
+    disp('stable')
+end
 impulse(sys);
